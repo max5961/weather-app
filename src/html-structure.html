@@ -1,0 +1,200 @@
+<div id="content">
+    <div class="sidebar">
+        <div class="content-box">
+            <form class="search">
+                <input type="text" name="search-location" id="search-location" placeholder="zip code or city" autofocus="true">
+                <button type="submit">
+                    <img class="search-icon" src="../src/media/search.svg" alt="search-icon">
+                </button>
+                <p class="error-message visible">No matching location found.</p>
+            </form>
+            <h2>Saved Locations</h2>
+            <ul class="saved-cities">
+                <li class="city-name">
+                    <button class="left-container">
+                        <h3>Boston</h3>
+                        <p class="region">Massachusetts, United States of America</p>
+                    </button>
+                    <button class="delete" city-object-id="12345">
+                        <img src="../src/media/delete.svg" alt="">
+                    </button>
+                </li>
+
+                <li class="city-name">
+                    <button class="left-container">
+                        <h3>New York</h3>
+                        <p class="region">New York, United States of America</p>
+                    </button>
+                    <button class="delete" city-object-id="12345">
+                        <img src="../src/media/delete.svg" alt="">
+                    </button>
+                </li>
+
+                <li class="city-name">
+                    <button class="left-container">
+                        <h3>Worcester</h3>
+                        <p class="region">Massachusetts, United States of America</p>
+                    </button>
+                    <button class="delete" city-object-id="12345">
+                        <img src="../src/media/delete.svg" alt="">
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="main-content">
+        <div class="content-box current ">
+            <div class="city-region-container">
+                <h2 class="city">Boston</h3>
+                <h5 class="region">Massachusetts, United States of America</h4>
+            </div>
+            <div class="time-date-container">
+                <p class="time"><span>as of</span>6:15pm</p>
+                <p class="date">Sunday, July 2nd 2023</p>
+            </div>
+            <p class="temp">69.1 &degF</p>
+            <div class="condition-container">
+                <img src="../src/media/apiIcons/day/116.png" alt="weather-icon" class="condition-icon icon">
+                <p class="condition">Partly cloudy</p>
+            </div>
+            <div class="weather-properties">
+
+                <div class="weather-property feels-like">
+                    <img src="../src/media/thermometer.svg" alt="wind">
+                    <div class="right-content">
+                        <p class="text">Feels like</p>
+                        <p class="value">70 &degF</p>
+                    </div>
+                </div>
+
+                <div class="weather-property wind">
+                    <img src="../src/media/wind.svg" alt="wind">
+                    <div class="right-content">
+                        <p class="text">Wind</p>
+                        <p class="value">20 mph</p>
+                    </div>
+                </div>
+
+                <div class="weather-property chance-rain">
+                    <img src="../src/media/rain.svg" alt="rain">
+                    <div class="right-content">
+                        <p class="text">Rain</p>
+                        <p class="value">20%</p>
+                    </div>
+                </div>
+
+                <div class="weather-property chance-snow">
+                    <img src="../src/media/snow.svg" alt="snow">
+                    <div class="right-content">
+                        <p class="text">Snow:</p>
+                        <p class="value">0%</p>
+                    </div>
+                </div>
+
+                <div class="weather-property humidity">
+                    <img src="../src/media/humidity.svg" alt="humidity">
+                    <div class="right-content">
+                        <p class="text">Humidity</p>
+                        <p class="value">63%</p>
+                    </div>
+                </div>
+
+                <div class="weather-property pressure">
+                    <img src="../src/media/pressure.svg" alt="pressure">
+                    <div class="right-content">
+                        <p class="text">Wind</p>
+                        <p class="value">29.86 in</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-box forecast">
+
+            <button class="forecast-day">
+                <h3 class="day-of-week">Monday 03</h3>
+                <div class="high-low-container">
+                    <p class="high-temp">80 &degF</p>
+                    <p class="low-temp">65 &degF</p>
+                </div>
+                <div class="condition-container">
+                    <img src="../src/media/apiIcons/day/113.png" alt="" class="condition icon">
+                    <p class="condition">Partly cloudy</p>
+                </div>
+            </button>
+
+            <button class="forecast-day">
+                <h3 class="day-of-week">Tuesday 04</h3>
+                <div class="high-low-container">
+                    <p class="high-temp">80 &degF</p>
+                    <p class="low-temp">65 &degF</p>
+                </div>
+                <div class="condition-container">
+                    <img src="../src/media/apiIcons/day/113.png" alt="" class="condition icon">
+                    <p class="condition">Partly cloudy</p>
+                </div>
+            </button>
+
+            <button class="forecast-day">
+                <h3 class="day-of-week">Wednesday 05</h3>
+                <div class="high-low-container">
+                    <p class="high-temp">80 &degF</p>
+                    <p class="low-temp">65 &degF</p>
+                </div>
+                <div class="condition-container">
+                    <img src="../src/media/apiIcons/day/113.png" alt="" class="condition icon">
+                    <p class="condition">Partly cloudy</p>
+                </div>
+            </button>
+
+            <button class="forecast-day">
+                <h3 class="day-of-week">Thursday 06</h3>
+                <div class="high-low-container">
+                    <p class="high-temp">80 &degF</p>
+                    <p class="low-temp">65 &degF</p>
+                </div>
+                <div class="condition-container">
+                    <img src="../src/media/apiIcons/day/113.png" alt="" class="condition icon">
+                    <p class="condition">Partly cloudy</p>
+                </div>
+            </button>
+
+            <button class="forecast-day">
+                <h3 class="day-of-week">Friday 07</h3>
+                <div class="high-low-container">
+                    <p class="high-temp">80 &degF</p>
+                    <p class="low-temp">65 &degF</p>
+                </div>
+                <div class="condition-container">
+                    <img src="../src/media/apiIcons/day/113.png" alt="" class="condition icon">
+                    <p class="condition">Partly cloudy</p>
+                </div>
+            </button>
+
+            <button class="forecast-day">
+                <h3 class="day-of-week">Saturday 08</h3>
+                <div class="high-low-container">
+                    <p class="high-temp">80 &degF</p>
+                    <p class="low-temp">65 &degF</p>
+                </div>
+                <div class="condition-container">
+                    <img src="../src/media/apiIcons/day/113.png" alt="" class="condition icon">
+                    <p class="condition">Partly cloudy</p>
+                </div>
+            </button>
+
+            <button class="forecast-day">
+                <h3 class="day-of-week">Sunday 09</h3>
+                <div class="high-low-container">
+                    <p class="high-temp">80 &degF</p>
+                    <p class="low-temp">65 &degF</p>
+                </div>
+                <div class="condition-container">
+                    <img src="../src/media/apiIcons/day/113.png" alt="" class="condition icon">
+                    <p class="condition">Partly cloudy</p>
+                </div>
+            </button>
+
+        </div>
+    </div>
+</div>

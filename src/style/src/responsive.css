@@ -1,0 +1,12 @@
+@media screen and (max-width: 750px) {
+    #content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    div.sidebar {
+        height: 90px;
+        width: 100%;
+        overflow: hidden;
+    }
+}

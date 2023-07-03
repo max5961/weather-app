@@ -12,7 +12,7 @@ import loadingGif from './media/loading.gif'
 // DONE WITH IMPORTS
 
 export async function getWeather(location) {
-    Loading.insert();
+    // Loading.insert();
 
     try {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${location}&days=7&aqi=no&alerts=yes`, {mode: 'cors'});
@@ -22,18 +22,18 @@ export async function getWeather(location) {
             if (data.error.message) {
                 throw new Error(data.error.message);
             } else {
-                throw new Error('unknown error has occured');
+                throw new Error(' unknown error has occured');
             }
         
         } else {
             console.log(data);
-            Loading.remove();
-            Populate.current(data);
+            // Loading.remove();
+            // Populate.current(data);
         }
     } catch(err) {
-        console.error(err);
-        Loading.remove();
-        Error.updateGUI();
+        console.log(err.message);
+        // Loading.remove();
+        // ErrorMessage.updateGUI();
     }
 }
 
@@ -81,7 +81,7 @@ export class Populate {
     }
 }
 
-class Error {
+class ErrorMessage {
     static updateGUI() {
 
     }
