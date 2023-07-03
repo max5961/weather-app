@@ -30,3 +30,17 @@ input {
     background-color: inherit;
     height: 35px;
 }
+
+::-webkit-scrollbar {
+    height: 12px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #2d5894; 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-track:hover {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #16345f;
+}
