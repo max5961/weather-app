@@ -117,12 +117,11 @@ img.icon {
     filter: brightness(.6);
 }
 .sidebar form.search p.error-message {
-    height: 0;
-    overflow: hidden;
+    visibility: hidden;
     text-align: center;
 }
 .sidebar form.search p.error-message.visible {
-    height: auto;
+    visibility: visible;
 }
 .sidebar button.expand-menu {
     width: 100%;

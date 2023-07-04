@@ -1,5 +1,7 @@
 import { iconImports } from "./controller.js";
 import { Input } from "./controller.js";
+import { WeatherData } from "./model.js";
+import { Format } from "./model.js";
 
 class Element {
     constructor(
@@ -99,7 +101,7 @@ export class Build {
                                 }).build(),
                                 new Element({
                                     'tagname': 'p',
-                                    'class': 'error-message visible',
+                                    'class': 'error-message',
                                     'text-content': 'No matching location found.',
                                 }).build(),
                             ],
@@ -212,7 +214,7 @@ export class Build {
         }).build();
     }
 
-    static currentWeather() {
+    static currentWeather(data) {
         return new Element({
             'tagname': 'div',
             'class': 'content-box current',
@@ -224,12 +226,12 @@ export class Build {
                         new Element({
                             'tagname': 'h2',
                             'class': 'city',
-                            'text-content': 'Boston',
+                            'text-content': `${data.location.city}`,
                         }).build(),
                         new Element({
                             'tagname': 'h5',
                             'class': 'region',
-                            'text-content': 'Massachusetts, USA',
+                            'text-content': `${data.location.region}, ${data.location.country}`,
                         }).build(),
                     ],
                 }).build(),
@@ -247,7 +249,7 @@ export class Build {
                                 }).build(),
                                 new Element({
                                     'tagname': 'span',
-                                    'text-content': '6:15pm',
+                                    'text-content': Format.getLocaleTime(data.current.lastUpdated),
                                 }).build(),
                             ],
                         }).build(),
@@ -262,6 +264,7 @@ export class Build {
                     'tagname': 'p',
                     'class': 'temp',
                     'text-content': '69.1 \u00B0F',
+                    'text-content': `${data.current.temp} \u00B0F`
                 }).build(),
                 new Element({
                     'tagname': 'div',
@@ -269,14 +272,14 @@ export class Build {
                     'children': [
                         new Element({
                             'tagname': 'img',
-                            'src': '../src/media/apiIcons/day/116.png',
+                            'src': iconImports[data.current.icon],
                             'alt': 'weather-icon',
                             'class': 'condition-icon icon',
                         }).build(),
                         new Element({
                             'tagname': 'p',
                             'class': 'condition',
-                            'text-content': 'Partly cloudy',
+                            'text-content': `${data.current.condition}`,
                         }).build(),
                     ],
                 }).build(),

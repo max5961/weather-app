@@ -1,8 +1,8 @@
 import './style/index.css';
 import { getWeather } from './controller.js';
-import { Populate } from './controller.js';
+import { Load } from './controller.js';
 
-Populate.defaultUI();
+Load.defaultUI();
 
 
 

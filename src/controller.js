@@ -1,19 +1,18 @@
-export const iconImports = { day: {}, night: {} };
-const dayIcons = ['113.png', '143.png', '185.png', '248.png', '281.png', '299.png', '311.png', '323.png', '335.png', '356.png', '368.png', '386.png', '116.png', '176.png', '200.png', '260.png', '284.png', '302.png', '314.png', '326.png', '338.png', '359.png', '371.png', '389.png', '119.png', '179.png', '227.png', '263.png', '293.png', '305.png', '317.png', '329.png', '350.png', '362.png', '374.png', '392.png', '122.png', '182.png', '230.png', '266.png', '296.png', '308.png', '320.png', '332.png', '353.png', '365.png', '377.png', '395.png'];
-const nightIcons = ['113.png', '143.png', '185.png', '248.png', '281.png', '299.png', '311.png', '323.png', '335.png', '356.png', '368.png', '386.png', '116.png', '176.png', '200.png', '260.png', '284.png', '302.png', '314.png', '326.png', '338.png', '359.png', '371.png', '389.png', '119.png', '179.png', '227.png', '263.png', '293.png', '305.png', '317.png', '329.png', '350.png', '362.png', '374.png', '392.png', '122.png', '182.png', '230.png', '266.png', '296.png', '308.png', '320.png', '332.png', '353.png', '365.png', '377.png', '395.png'];
-dayIcons.forEach(icon => {
-    iconImports.day[icon] = require(`./media/apiIcons/day/${icon}`);
-})
-nightIcons.forEach(icon => {
-    iconImports.night[icon] = require(`./media/apiIcons/night/${icon}`);
-})
+export const iconImports = {};
+const dayIcons = ["day/113.png","day/143.png","day/185.png","day/248.png","day/281.png","day/299.png","day/311.png","day/323.png","day/335.png","day/356.png","day/368.png","day/386.png","day/116.png","day/176.png","day/200.png","day/260.png","day/284.png","day/302.png","day/314.png","day/326.png","day/338.png","day/359.png","day/371.png","day/389.png","day/119.png","day/179.png","day/227.png","day/263.png","day/293.png","day/305.png","day/317.png","day/329.png","day/350.png","day/362.png","day/374.png","day/392.png","day/122.png","day/182.png","day/230.png","day/266.png","day/296.png","day/308.png","day/320.png","day/332.png","day/353.png","day/365.png","day/377.png","day/395.png"]
+const nightIcons = ["night/113.png","night/143.png","night/185.png","night/248.png","night/281.png","night/299.png","night/311.png","night/323.png","night/335.png","night/356.png","night/368.png","night/386.png","night/116.png","night/176.png","night/200.png","night/260.png","night/284.png","night/302.png","night/314.png","night/326.png","night/338.png","night/359.png","night/371.png","night/389.png","night/119.png","night/179.png","night/227.png","night/263.png","night/293.png","night/305.png","night/317.png","night/329.png","night/350.png","night/362.png","night/374.png","night/392.png","night/122.png","night/182.png","night/230.png","night/266.png","night/296.png","night/308.png","night/320.png","night/332.png","night/353.png","night/365.png","night/377.png","night/395.png"];
+// import all icons
+[dayIcons, nightIcons].flat().forEach(icon => iconImports[icon] = require(`./media/apiIcons/${icon}`));
+
 import { APIkey } from "./APIkey";
+import { WeatherData } from "./model.js";
 import loadingGif from './media/loading.gif'
 import { Build } from './view.js' 
 // DONE WITH IMPORTS
 
 export async function getWeather(location) {
-    Populate.insertLoadingGIF();
+    Move.removeWeather();
+    Load.insertLoadingGIF();
 
     try {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${location}&days=7&aqi=no&alerts=yes`, {mode: 'cors'});
@@ -28,17 +27,34 @@ export async function getWeather(location) {
         
         } else {
             // response was okay
-            Populate.removeLoadingGIF();
+            Load.removeLoadingGIF();
             console.log(data);
+            const weatherData = new WeatherData();
+            weatherData.setData(data);
+            console.log(weatherData.weather.US);
+            Load.currentWeather(weatherData.weather.US);
+
         }
     } catch(err) {
         console.log(err.message);
-        Populate.removeLoadingGIF();
+        Load.removeLoadingGIF();
         // ErrorMessage.updateGUI();
     }
 }
 
-export class Populate {
+export class Move {
+    static removeWeather() {
+        const currentWeather = document.querySelector('.content-box.current');
+        const forecastWeather = document.querySelector('.content-box.forecast');
+        if (currentWeather) {
+            currentWeather.remove();
+        }
+        if (forecastWeather) {
+            forecastWeather.remove();
+        }
+    }
+}
+export class Load {
     static defaultUI() {
         const content = document.querySelector('#content');
         [
@@ -58,6 +74,10 @@ export class Populate {
 
     static removeLoadingGIF() {
         document.querySelector('img.loading-gif').remove();
+    }
+
+    static currentWeather(data) {
+        document.querySelector('#content').appendChild(Build.currentWeather(data));
     }
 }
 
