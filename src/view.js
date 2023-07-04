@@ -512,35 +512,19 @@ export class Build {
         }).build();
     }
 
-    static forecastItemHourly() {
+    static forecastItemHourly(data) {
         return new Element({
             'tagname': 'div',
             'class': 'forecast-item hourly-item',
             'children': [
                 new Element({
                     'tagname': 'h3',
-                    'text-content': '1 am',
+                    'text-content': Format.getHourAMPM(data.time),
                 }).build(),
                 new Element({
-                    'tagname': 'div',
-                    'class': 'high-low-container',
-                    'children': [
-                        new Element({
-                            'tagname': 'span',
-                            'class': 'high-temp',
-                            'text-content': '80 °',
-                        }).build(),
-                        new Element({
-                            'tagname': 'span',
-                            'class': 'divider',
-                            'text-content': '/',
-                        }).build(),
-                        new Element({
-                            'tagname': 'span',
-                            'class': 'low-temp',
-                            'text-content': '65 °',
-                        }).build(),
-                    ],
+                    'tagname': 'p',
+                    'class': 'hourly-temp',
+                    'text-content':`${data.temp}\u00B0`,
                 }).build(),
                 new Element({
                     'tagname': 'div',
@@ -549,13 +533,13 @@ export class Build {
                         new Element({
                             'tagname': 'img',
                             'class': 'condition icon',
-                            'src': '../src/media/apiIcons/day/113.png',
+                            'src': iconImports[data.icon],
                             'alt': '',
                         }).build(),
                         new Element({
                             'tagname': 'p',
                             'class': 'condition',
-                            'text-content': 'Partly cloudy',
+                            'text-content': `${data.condition}`,
                         }).build(),
                     ],
                 }).build(),
@@ -563,7 +547,7 @@ export class Build {
         }).build();
     }
 
-    static hourlyDateContainer() {
+    static hourlyDateContainer(data) {
         // to be appended inside of .content-box.forecast
         return new Element({
             'tagname': 'div',
@@ -572,13 +556,15 @@ export class Build {
                 new Element({
                     'tagname': 'p',
                     'class': 'date',
-                    'text-content': 'Tuesday, July 4',
+                    'text-content': `${Format.getSpokenDate(data.date)}`,
                 }).build(),
-                new Element({
-                    'tagname': 'div',
-                    'class': 'hours-container',
-                    // .forecast-item.hourly-item to be appended inside of .hours-container
-                }).build(),
+
+                // *** build .hours-container directly in js ***
+                // new Element({
+                //     'tagname': 'div',
+                //     'class': 'hours-container',
+                //     // .forecast-item.hourly-item to be appended inside of .hours-container
+                // }).build(),
             ],
         }).build();
     }

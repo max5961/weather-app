@@ -190,7 +190,7 @@ export class Format {
         }
     }
 
-    static getDayNumberShort(string) {
+    static getDayNumber(string) {
         const number = new Date(string).getDate();
         if (number > 9) {
             return number.toString();
@@ -217,11 +217,16 @@ export class Format {
         }
     }
 
-    static getHour(string) {
+    static getHour24HR(string) {
         // returns the hour of a date in the format 'hh'
         // to be used with data.forecast.forecastday[i].hour[i].time
         // date must be formatted in 'yyyy-MM-dd hh-mm" format
         return string.split(' ')[1].split(':')[0];
+    }
+
+    static getHourAMPM(string) {
+        const datedString = new Date(string).toLocaleTimeString();
+        return datedString.split(' ')[0].split(':')[0] + datedString.split(' ')[1].toLowerCase();
     }
 
     static abbreviateCountryName(string) {

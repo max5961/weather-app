@@ -8,6 +8,7 @@ import { APIkey } from "./APIkey";
 import { WeatherData } from "./model.js";
 import loadingGif from './media/loading.gif'
 import { Build } from './view.js' 
+import { Format } from './model.js';
 // DONE WITH IMPORTS
 
 export async function getWeather(location) {
@@ -32,7 +33,7 @@ export async function getWeather(location) {
             weatherData.setData(data);
             console.log(weatherData.weather.US);
             Load.currentWeather(weatherData.weather.US);
-            Load.forecastDaily(weatherData.weather.US);
+            Load.forecastHourly(weatherData.weather.US);
 
         }
     } catch(err) {
@@ -87,6 +88,39 @@ export class Load {
         }
 
         document.querySelector('#content').appendChild(forecastContainer);
+    }
+
+    static forecastHourly(data) {
+        const currentHour = Number(Format.getHour24HR(data.location.localTime));
+        const currentDayHours = data.hourly[0].slice(currentHour);
+        const nextDayHours = data.hourly[1].slice(0, data.hourly[1].length - currentDayHours.length);
+        
+        const forecastContainer = Build.forecastContainer();
+        
+        const dayOneHourlyDateContainer = Build.hourlyDateContainer(data.daily[0])
+        const dayOneContent = createHoursContainer();
+        for (let i = 0; i < currentDayHours.length; i++) {
+            dayOneContent.appendChild(Build.forecastItemHourly(currentDayHours[i]))
+        }
+        dayOneHourlyDateContainer.appendChild(dayOneContent);
+        forecastContainer.appendChild(dayOneHourlyDateContainer);
+
+        const dayTwoHourlyDateContainer = Build.hourlyDateContainer(data.daily[1]);
+        const dayTwoContent = createHoursContainer();
+        for (let i = 0; i < nextDayHours.length; i++) {
+            dayTwoContent.appendChild(Build.forecastItemHourly(nextDayHours[i]));
+        }
+        dayTwoHourlyDateContainer.appendChild(dayTwoContent);
+        forecastContainer.appendChild(dayTwoHourlyDateContainer);
+
+        document.querySelector('#content').appendChild(forecastContainer);
+
+
+        function createHoursContainer() {
+            const container = document.createElement('div');
+            container.classList.add('hours-container');
+            return container;
+        }
     }
 }
 
