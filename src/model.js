@@ -23,7 +23,7 @@ export class WeatherData {
                 location: {
                     city: data.location.name,
                     region: data.location.region,
-                    country: this.formatUSA(data.location.country),
+                    country: Format.abbreviateCountryName(data.location.country),
                     localTime: data.location.localtime,
                 },
             },
@@ -31,7 +31,7 @@ export class WeatherData {
                 location: {
                     city: data.location.name,
                     region: data.location.region,
-                    country: this.formatUSA(data.location.country),
+                    country: Format.abbreviateCountryName(data.location.country),
                     localTime: data.location.localtime,
                 },
             }
@@ -44,28 +44,28 @@ export class WeatherData {
                 current: {
                     lastUpdated: data.current.last_updated,
                     condition: data.current.condition.text,
-                    icon: this.formatIcon(data.current.condition.icon),
+                    icon: Format.getIconPath(data.current.condition.icon),
                     rainChance: data.forecast.forecastday[0].day.daily_chance_of_rain,
                     snowChance: data.forecast.forecastday[0].day.daily_chance_of_snow,
                     humidity: data.current.humidity,
-                    pressure: data.current.pressure_in,
-                    temp: data.current.temp_f,
-                    feelsLike: data.current.feelslike_f,
-                    wind: data.current.wind_mph,
+                    pressure: data.current.pressure_in + ' inHg',
+                    temp: data.current.temp_f + '\u00B0 F',
+                    feelsLike: data.current.feelslike_f + '\u00B0',
+                    wind: data.current.wind_mph + ' mph',
                 }
             },
             metric: {
                 current: {
                     lastUpdated: data.current.last_updated,
                     condition: data.current.condition.text,
-                    icon: this.formatIcon(data.current.condition.icon),
+                    icon: Format.getIconPath(data.current.condition.icon),
                     rainChance: data.forecast.forecastday[0].day.daily_chance_of_rain,
                     snowChance: data.forecast.forecastday[0].day.daily_chance_of_snow,
                     humidity: data.current.humidity,
-                    pressure: data.current.pressure_mb,
-                    temp: data.current.temp_c,
-                    feelsLike: data.current.feelslike_c,
-                    wind: data.current.wind_kph,
+                    pressure: data.current.pressure_mb + ' mb',
+                    temp: data.current.temp_c + '\u00B0 C',
+                    feelsLike: data.current.feelslike_c + '\u00B0',
+                    wind: data.current.wind_kph + ' kph',
                 }
             }
         }
@@ -89,14 +89,14 @@ export class WeatherData {
                 highTemp: data.forecast.forecastday[i].day.maxtemp_f,
                 lowTemp: data.forecast.forecastday[i].day.mintemp_f,
                 condition: data.forecast.forecastday[i].day.condition.text,
-                icon: this.formatIcon(data.forecast.forecastday[i].day.condition.icon),
+                icon: Format.getIconPath(data.forecast.forecastday[i].day.condition.icon),
             },
             metric: {
                 date: data.forecast.forecastday[i].date,
                 highTemp: data.forecast.forecastday[i].day.maxtemp_c,
                 lowTemp: data.forecast.forecastday[i].day.mintemp_c,
                 condition: data.forecast.forecastday[i].day.condition.text,
-                icon: this.formatIcon(data.forecast.forecastday[i].day.condition.icon),
+                icon: Format.getIconPath(data.forecast.forecastday[i].day.condition.icon),
             }
         }
     }
@@ -125,95 +125,23 @@ export class WeatherData {
                 time: data.forecast.forecastday[i].hour[j].time,
                 temp: data.forecast.forecastday[i].hour[j].temp_f,
                 condition: data.forecast.forecastday[i].hour[j].condition.text,
-                icon: this.formatIcon(data.forecast.forecastday[i].hour[j].condition.icon),
+                icon: Format.getIconPath(data.forecast.forecastday[i].hour[j].condition.icon),
             },
             metric: {
                 time: data.forecast.forecastday[i].hour[j].time,
                 temp: data.forecast.forecastday[i].hour[j].temp_c,
                 condition: data.forecast.forecastday[i].hour[j].condition.text,
-                icon: this.formatIcon(data.forecast.forecastday[i].hour[j].condition.icon),
+                icon: Format.getIconPath(data.forecast.forecastday[i].hour[j].condition.icon),
             }
-        }
-    }
-
-    formatIcon(string) {
-        if (string.includes('night')) {
-            return `night/${sliceString(string)}`;
-        }
-
-        if (string.includes('day')) {
-            return `day/${sliceString(string)}`;
-        }
-
-        function sliceString(string) {
-            return string.slice(string.length - 7, string.length);
-        }
-    }
-
-    getDayNameLong(string) {
-        return ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(string).getDay()];
-    }
-    
-    getDayNameShort(string) {
-        return ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(string).getDay()];
-    }
-
-    getMonthName(string) {
-        return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][new Date(string).getMonth()];
-    }
-
-    getDayNumber(string) {
-        const number = new Date(string).getDate();
-        let suffix = 'th';
-
-        if (number == 1 || number == 21 || number == 31) {
-            return number + 'st';
-        }
-        if (number == 2 || number == 22) {
-            return number + 'nd';
-        }
-        if (number == 3 || number == 23) {
-            return number + 'rd';
-        }
-        else {
-            return number + suffix;
-        }
-    }
-
-    getDayNumberShort(string) {
-        const number = new Date(string).getDate();
-        if (number > 9) {
-            return number.toString();
-        }
-        if (number < 10) {
-            return '0' + number;
-        }
-    }
-
-    getYearNumber(string) {
-        return new Date(string).getFullYear();
-    }
-
-    getFormattedDate(string) {
-        return `${this.getDayNameLong(string)}, ${this.getMonthName(string)} ${this.getDayNumber(string)}, ${this.getYearNumber(string)}`;
-    }
-
-    getLocaleTime(string) {
-        const date = new Date(string);
-        return date.toLocaleTimeString().slice(0,5) + date.toLocaleTimeString().slice(8,11).toLowerCase();
-    }
-
-    formatUSA(string) {
-        if (string === 'United States of America') {
-            return "USA";
-        } else {
-            return string;
         }
     }
 }
 
 export class Format {
-    static formatIcon(string) {
+
+    // gets the property that can be used to reference an imported icon
+    // iconImports[Format.getIconPath(data)];
+    static getIconPath(string) {
         if (string.includes('night')) {
             return `night/${sliceString(string)}`;
         }
@@ -271,7 +199,7 @@ export class Format {
         return new Date(string).getFullYear();
     }
 
-    static getFormattedDate(string) {
+    static getSpokenDate(string) {
         return `${this.getDayNameLong(string)}, ${this.getMonthName(string)} ${this.getDayNumber(string)}, ${this.getYearNumber(string)}`;
     }
 
@@ -284,7 +212,14 @@ export class Format {
         }
     }
 
-    static formatUSA(string) {
+    static getHour(string) {
+        // returns the hour of a date in the format 'hh'
+        // to be used with data.forecast.forecastday[i].hour[i].time
+        // date must be formatted in 'yyyy-MM-dd hh-mm" format
+        return string.split(' ')[1].split(':')[0];
+    }
+
+    static abbreviateCountryName(string) {
         if (string === 'United States of America') {
             return "USA";
         } else {

@@ -256,15 +256,14 @@ export class Build {
                         new Element({
                             'tagname': 'p',
                             'class': 'date',
-                            'text-content': 'Sunday, July 2nd 2023',
+                            'text-content': Format.getSpokenDate(data.current.lastUpdated),
                         }).build(),
                     ],
                 }).build(),
                 new Element({
                     'tagname': 'p',
                     'class': 'temp',
-                    'text-content': '69.1 \u00B0F',
-                    'text-content': `${data.current.temp} \u00B0F`
+                    'text-content': `${data.current.temp}`,
                 }).build(),
                 new Element({
                     'tagname': 'div',
@@ -294,7 +293,7 @@ export class Build {
                                 new Element({
                                     'tagname': 'img',
                                     'src': '../src/media/thermometer.svg',
-                                    'alt': 'wind',
+                                    'alt': 'feels-like',
                                 }).build(),
                                 new Element({
                                     'tagname': 'div',
@@ -308,7 +307,7 @@ export class Build {
                                         new Element({
                                             'tagname': 'p',
                                             'class': 'value',
-                                            'text-content': '70 &degF',
+                                            'text-content': `${data.current.feelsLike}`
                                         }).build(),
                                     ],
                                 }).build(),
@@ -335,7 +334,7 @@ export class Build {
                                         new Element({
                                             'tagname': 'p',
                                             'class': 'value',
-                                            'text-content': '20 mph',
+                                            'text-content': `${data.current.wind}`,
                                         }).build(),
                                     ],
                                 }).build(),
@@ -362,7 +361,7 @@ export class Build {
                                         new Element({
                                             'tagname': 'p',
                                             'class': 'value',
-                                            'text-content': '20%',
+                                            'text-content': `${data.current.rainChance}%`,
                                         }).build(),
                                     ],
                                 }).build(),
@@ -389,7 +388,7 @@ export class Build {
                                         new Element({
                                             'tagname': 'p',
                                             'class': 'value',
-                                            'text-content': '0%',
+                                            'text-content': `${data.current.snowChance}%`,
                                         }).build(),
                                     ],
                                 }).build(),
@@ -416,7 +415,7 @@ export class Build {
                                         new Element({
                                             'tagname': 'p',
                                             'class': 'value',
-                                            'text-content': '63%',
+                                            'text-content': `${data.current.humidity}%`,
                                         }).build(),
                                     ],
                                 }).build(),
@@ -438,12 +437,12 @@ export class Build {
                                         new Element({
                                             'tagname': 'p',
                                             'class': 'text',
-                                            'text-content': 'Wind',
+                                            'text-content': 'Pressure',
                                         }).build(),
                                         new Element({
                                             'tagname': 'p',
                                             'class': 'value',
-                                            'text-content': '29.86 in',
+                                            'text-content': `${data.current.pressure}`
                                         }).build(),
                                     ],
                                 }).build(),
