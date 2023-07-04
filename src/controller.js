@@ -32,9 +32,7 @@ export async function getWeather(location) {
             const weatherData = new WeatherData();
             weatherData.setData(data);
             console.log(weatherData.weather.US);
-            Load.currentWeather(weatherData.weather.US);
-            Load.forecastHourly(weatherData.weather.US);
-
+            Populate.dailyUS(weatherData.weather);
         }
     } catch(err) {
         console.log(err.message);
@@ -55,7 +53,45 @@ export class Move {
         }
     }
 }
+
+export class Populate {
+    static dailyMetric(data) {
+        Load.removeContent();
+        Load.currentWeather(data.metric);
+        Load.forecastDaily(data.metric)
+    }
+    
+    static dailyUS(data) {
+        Load.removeContent();
+        Load.currentWeather(data.US);
+        Load.forecastDaily(data.US);
+    }
+
+    static hourlyMetric(data) {
+        Load.removeContent();
+        Load.currentWeather(data.metric);
+        Load.forecastHourly(data.metric);
+    }
+
+    static hourlyUS(data) {
+        Load.removeContent();
+        Load.currentWeather(data.US);
+        Load.forecastHourly(data.US);
+    }
+}
+
 export class Load {
+    static removeContent() {
+        const current = document.querySelector('.content-box.current');
+        const forecast = document.querySelector('.content-box.forecast');
+
+        if (current) {
+            current.remove();
+        }
+        if (forecast) {
+            forecast.remove();
+        }
+    }
     static defaultUI() {
         const content = document.querySelector('#content');
         [
