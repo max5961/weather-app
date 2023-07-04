@@ -26,13 +26,13 @@ export async function getWeather(location) {
             }
         
         } else {
-            // response was okay
             Load.removeLoadingGIF();
             console.log(data);
             const weatherData = new WeatherData();
             weatherData.setData(data);
             console.log(weatherData.weather.US);
             Load.currentWeather(weatherData.weather.US);
+            Load.forecastDaily(weatherData.weather.US);
 
         }
     } catch(err) {
@@ -78,6 +78,15 @@ export class Load {
 
     static currentWeather(data) {
         document.querySelector('#content').appendChild(Build.currentWeather(data));
+    }
+
+    static forecastDaily(data) {
+        const forecastContainer = Build.forecastContainer();
+        for (let i = 0; i < 7; i++) {
+            forecastContainer.appendChild(Build.forecastItemDaily(data.daily[i]));
+        }
+
+        document.querySelector('#content').appendChild(forecastContainer);
     }
 }
 

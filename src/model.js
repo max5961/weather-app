@@ -163,11 +163,16 @@ export class Format {
         return ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(string).getDay()];
     }
 
+    static getDayNumber(string) {
+        // string represting date must be in 'yyyy-MM-dd' format
+        return string.split('-')[2].slice(0,2);
+    }
+
     static getMonthName(string) {
         return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][new Date(string).getMonth()];
     }
 
-    static getDayNumber(string) {
+    static getDayNumberPrefix(string) {
         const number = new Date(string).getDate();
         let suffix = 'th';
 
@@ -200,7 +205,7 @@ export class Format {
     }
 
     static getSpokenDate(string) {
-        return `${this.getDayNameLong(string)}, ${this.getMonthName(string)} ${this.getDayNumber(string)}, ${this.getYearNumber(string)}`;
+        return `${this.getDayNameLong(string)}, ${this.getMonthName(string)} ${this.getDayNumberPrefix(string)}, ${this.getYearNumber(string)}`;
     }
 
     static getLocaleTime(string) {

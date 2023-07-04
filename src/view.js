@@ -461,14 +461,14 @@ export class Build {
         }).build();
     }
 
-    static forecastItemDaily() {
+    static forecastItemDaily(data) {
         return new Element({
             'tagname': 'div',
             'class': 'forecast-item daily-item',
             'children': [
                 new Element({
                     'tagname': 'h3',
-                    'text-content': 'Mon 03',
+                    'text-content': `${Format.getDayNameShort(data.date)} ${Format.getDayNumber(data.date)}`,
                 }).build(),
                 new Element({
                     'tagname': 'div',
@@ -477,7 +477,7 @@ export class Build {
                         new Element({
                             'tagname': 'span',
                             'class': 'high-temp',
-                            'text-content': '80 °',
+                            'text-content': `${data.highTemp}\u00B0`,
                         }).build(),
                         new Element({
                             'tagname': 'span',
@@ -487,7 +487,7 @@ export class Build {
                         new Element({
                             'tagname': 'span',
                             'class': 'low-temp',
-                            'text-content': '65 °',
+                            'text-content': `${data.lowTemp}\u00B0`,
                         }).build(),
                     ],
                 }).build(),
@@ -498,13 +498,13 @@ export class Build {
                         new Element({
                             'tagname': 'img',
                             'class': 'condition icon',
-                            'src': '../src/media/apiIcons/day/113.png',
+                            'src': iconImports[data.icon],
                             'alt': '',
                         }).build(),
                         new Element({
                             'tagname': 'p',
                             'class': 'condition',
-                            'text-content': 'Partly cloudy',
+                            'text-content': `${data.condition}`,
                         }).build(),
                     ],
                 }).build(),
