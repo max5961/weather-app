@@ -32,7 +32,7 @@ export async function getWeather(location) {
             const weatherData = new WeatherData();
             weatherData.setData(data);
             console.log(weatherData.weather.US);
-            Populate.dailyUS(weatherData.weather);
+            Populate.hourlyUS(weatherData.weather);
         }
     } catch(err) {
         console.log(err.message);

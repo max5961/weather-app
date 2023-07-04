@@ -1,4 +1,5 @@
 import { iconImports } from "./controller.js";
+import searchIcon from './media/search.svg'
 import { Input } from "./controller.js";
 import { WeatherData } from "./model.js";
 import { Format } from "./model.js";
@@ -94,7 +95,7 @@ export class Build {
                                         new Element({
                                             'tagname': 'img',
                                             'class': 'search-icon',
-                                            'src': '../src/media/search.svg',
+                                            'src': searchIcon,
                                             'alt': 'search-icon',
                                         }).build(),
                                     ],
