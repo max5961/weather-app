@@ -1,5 +1,10 @@
 import './style/index.css';
 import { getWeather } from './controller.js';
+import { Populate } from './controller.js';
 
-getWeather('01545');
+Populate.defaultUI();
+
+
+
+
 
