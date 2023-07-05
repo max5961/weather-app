@@ -16,8 +16,9 @@
         "forecast forecast";
     filter: saturate(0.8);
     background-image: url('../../src/media/background-image3.jpg');
+    /* background-image: url('../../src/media/night-background.jpg'); */
     background-size: cover;
-    /* background-color: antiquewhite; */
+    transition: background-image 1000ms ease-in-out;
 }
 .sidebar {
     grid-area: sidebar;

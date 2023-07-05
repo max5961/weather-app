@@ -28,7 +28,9 @@ export async function getWeather(location) {
             }
         
         } else {
+            console.log(data);
             Load.removeLoadingGIF();
+            UI.toggleBackgroundImage(data);
             Input.handleData(data);
         }
     } catch(err) {
@@ -45,25 +47,25 @@ export const Settings = {
 
 export class Populate {
     static dailyMetric() {
-        Load.removeWeather;
+        Load.removeWeather();
         Load.currentWeather(weatherData.weather.metric);
         Load.forecastDaily(weatherData.weather.metric)
     }
     
     static dailyUS() {
-        Load.removeWeather;
+        Load.removeWeather();
         Load.currentWeather(weatherData.weather.US);
         Load.forecastDaily(weatherData.weather.US);
     }
 
     static hourlyMetric() {
-        Load.removeWeather;
+        Load.removeWeather();
         Load.currentWeather(weatherData.weather.metric);
         Load.forecastHourly(weatherData.weather.metric);
     }
 
     static hourlyUS() {
-        Load.removeWeather;
+        Load.removeWeather();
         Load.currentWeather(weatherData.weather.US);
         Load.forecastHourly(weatherData.weather.US);
     }
@@ -280,6 +282,15 @@ export class UI {
         const hourly = document.querySelector('button.settings.hourly-forecast');
         [daily, hourly].forEach(button => button.classList.remove('chosen-setting'));
         e.target.classList.add('chosen-setting');
+    }
+
+    static toggleBackgroundImage(data) {
+        const content = document.querySelector('#content');
+        if (data.current.condition.icon.includes('/night/')) {
+            content.style.backgroundImage = "url('../src/media/night-background.jpg')"
+        } else {
+            content.style.backgroundImage = "url('../src/media/background-image3.jpg')";;
+        }
     }
 }
 
