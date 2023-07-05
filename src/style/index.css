@@ -158,10 +158,9 @@ img.icon {
     background-color: #00000080;
 }
 .sidebar .toggle-container button.chosen-setting {
-    border-color: white;
-    color: white;
-    box-shadow: 0px 0px 5px white;
-    background-color: #000000;
+    color: #000000;
+    background-color: #69bbff80;
+    border-color: #000000;
 }
 .sidebar ul.saved-cities {
     display: flex;

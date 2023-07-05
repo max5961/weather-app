@@ -3,6 +3,10 @@ export class WeatherData {
         this.weather = {US:{}, metric:{}};
     }
 
+    isEmpty() {
+        return Object.keys(this.weather.US).length === 0;
+    }
+    
     setData(data) {
         const current = this.getCurrent(data);
         const daily = this.getDailyForecast(data);

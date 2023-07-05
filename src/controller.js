@@ -9,11 +9,12 @@ import { WeatherData } from "./model.js";
 import loadingGif from './media/loading.gif'
 import { Build } from './view.js' 
 import { Format } from './model.js';
+import { weatherData } from './index.js';
 // DONE WITH IMPORTS
 
 export async function getWeather(location) {
     Move.removeWeather();
-    Load.insertLoadingGIF();
+    Move.insertLoadingGIF();
 
     try {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${location}&days=7&aqi=no&alerts=yes`, {mode: 'cors'});
@@ -27,18 +28,18 @@ export async function getWeather(location) {
             }
         
         } else {
-            Load.removeLoadingGIF();
-            console.log(data);
-            const weatherData = new WeatherData();
-            weatherData.setData(data);
-            console.log(weatherData.weather.US);
-            Populate.hourlyUS(weatherData.weather);
+            Move.removeLoadingGIF();
+            Input.handleData(data);
         }
     } catch(err) {
         console.log(err.message);
-        Load.removeLoadingGIF();
+        Move.removeLoadingGIF();
         // ErrorMessage.updateGUI();
     }
+}
+export const Settings = {
+    measurement: 'US', // 'US' or 'metric'
+    forecast: 'hourly', // 'hourly' or 'daily'
 }
 
 export class Move {
@@ -52,31 +53,120 @@ export class Move {
             forecastWeather.remove();
         }
     }
+
+    static insertLoadingGIF() {
+        const gif = document.createElement('img');
+        gif.classList.add('loading-gif');
+        gif.src = loadingGif;
+        document.querySelector('#content').appendChild(gif);
+    }
+
+    static removeLoadingGIF() {
+        document.querySelector('img.loading-gif').remove();
+    }
+
+
 }
 
 export class Populate {
-    static dailyMetric(data) {
+    static dailyMetric() {
         Load.removeContent();
-        Load.currentWeather(data.metric);
-        Load.forecastDaily(data.metric)
+        Load.currentWeather(weatherData.weather.metric);
+        Load.forecastDaily(weatherData.weather.metric)
     }
     
-    static dailyUS(data) {
+    static dailyUS() {
         Load.removeContent();
-        Load.currentWeather(data.US);
-        Load.forecastDaily(data.US);
+        Load.currentWeather(weatherData.weather.US);
+        Load.forecastDaily(weatherData.weather.US);
     }
 
-    static hourlyMetric(data) {
+    static hourlyMetric() {
         Load.removeContent();
-        Load.currentWeather(data.metric);
-        Load.forecastHourly(data.metric);
+        Load.currentWeather(weatherData.weather.metric);
+        Load.forecastHourly(weatherData.weather.metric);
     }
 
-    static hourlyUS(data) {
+    static hourlyUS() {
         Load.removeContent();
-        Load.currentWeather(data.US);
-        Load.forecastHourly(data.US);
+        Load.currentWeather(weatherData.weather.US);
+        Load.forecastHourly(weatherData.weather.US);
+    }
+
+    static clickUS(e) {
+        Settings.measurement = 'US';
+        UI.updateMeasurementButtons(e);
+
+        if (weatherData.isEmpty()) {
+            return;
+        } 
+        else {
+            if (Settings.forecast === 'hourly') {
+                Populate.hourlyUS();
+                return;
+            }
+            if (Settings.forecast === 'daily') {
+                Populate.dailyUS();
+                return;
+            }
+        }
+    }
+
+    static clickMetric(e) {
+        Settings.measurement = 'metric';
+        UI.updateMeasurementButtons(e);
+
+        if (weatherData.isEmpty()) {
+            return;
+        }
+        else {
+            if (Settings.forecast === 'hourly') {
+                Populate.hourlyMetric();
+                return;
+            }
+            if (Settings.forecast === 'daily') {
+                Populate.dailyMetric();
+                return;
+            }
+        }
+    }
+
+    static clickDaily(e) {
+        Settings.forecast = 'daily';
+        UI.updateForecastButtons(e);
+
+        if (weatherData.isEmpty()) {
+            return;
+        }
+        else {
+            if (Settings.measurement === 'US') {
+                Populate.dailyUS();
+                return;
+            }
+            if (Settings.measurement === 'metric') {
+                Populate.dailyMetric();
+                return;
+            }
+        }
+    }
+
+    static clickHourly(e) {
+        Settings.forecast = 'hourly';
+        UI.updateForecastButtons(e);
+
+        if (weatherData.isEmpty()) {
+            return;
+        }
+        else {
+            if (Settings.measurement === 'US') {
+                Populate.hourlyUS();
+                return;
+            }
+            if (Settings.measurement === 'metric') {
+                Populate.hourlyMetric();
+                return;
+            }
+        }
     }
 }
 
@@ -100,17 +190,6 @@ export class Load {
             // Build.forecastContainer(),
         ]
         .forEach(container => content.appendChild(container));
-    }
-
-    static insertLoadingGIF() {
-        const gif = document.createElement('img');
-        gif.classList.add('loading-gif');
-        gif.src = loadingGif;
-        document.querySelector('#content').appendChild(gif);
-    }
-
-    static removeLoadingGIF() {
-        document.querySelector('img.loading-gif').remove();
     }
 
     static currentWeather(data) {
@@ -160,10 +239,6 @@ export class Load {
     }
 }
 
-class HandleError {
-
-}
-
 export class Input {
     static submitLocation(e) {
         e.preventDefault();
@@ -175,6 +250,48 @@ export class Input {
             input.value = "";
             getWeather(location);
         }
+    }
+
+    static handleData(data) {
+        weatherData.setData(data);
+
+        if (Settings.measurement === 'US') {
+            if (Settings.forecast === 'daily') {
+                Populate.dailyUS();
+                return;
+            }
+            if (Settings.forecast === 'hourly') {
+                Populate.hourlyUS();
+                return;
+            }
+        }
+
+        if (Settings.measurement === 'metric') {
+            if (Settings.forecast === 'daily') {
+                Populate.dailyMetric();
+                return;
+            }
+            if (Settings.forecast === 'hourly') {
+                Populate.hourlyMetric();
+                return;
+            }
+        }
+    }
+}
+
+export class UI {
+    static updateMeasurementButtons(e) {
+        const US = document.querySelector('button.settings.us-measurement');
+        const metric = document.querySelector('button.settings.metric-measurement');
+        [US, metric].forEach(button => button.classList.remove('chosen-setting'));
+        e.target.classList.add('chosen-setting');
+    }
+
+    static updateForecastButtons(e) {
+        const daily = document.querySelector('button.settings.daily-forecast');
+        const hourly = document.querySelector('button.settings.hourly-forecast');
+        [daily, hourly].forEach(button => button.classList.remove('chosen-setting'));
+        e.target.classList.add('chosen-setting');
     }
 }
 

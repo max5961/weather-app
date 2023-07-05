@@ -3,6 +3,7 @@ import searchIcon from './media/search.svg'
 import { Input } from "./controller.js";
 import { WeatherData } from "./model.js";
 import { Format } from "./model.js";
+import { Populate } from "./controller.js";
 
 class Element {
     constructor(
@@ -136,29 +137,37 @@ export class Build {
                                     'children': [
                                         new Element({
                                             'tagname': 'button',
-                                            'text-content': 'Metric',
+                                            'text-content': 'US',
+                                            'class':'settings us-measurement chosen-setting',
+                                            'event-listeners':{'click':Populate.clickUS},
                                         }).build(),
                                         new Element({
                                             'tagname': 'button',
-                                            'text-content': 'US',
+                                            'text-content': 'Metric',
+                                            'class':'settings metric-measurement',
+                                            'event-listeners':{'click':Populate.clickMetric},
                                         }).build(),
                                     ],
                                 }).build(),
                                 new Element({
                                     'tagname': 'h4',
-                                    'text-content': 'Information',
+                                    'text-content': 'Forecast',
                                 }).build(),
                                 new Element({
                                     'tagname': 'div',
-                                    'class': 'toggle-container forecast-hourly',
+                                    'class': 'toggle-container forecast-hourly chosen-setting',
                                     'children': [
                                         new Element({
                                             'tagname': 'button',
-                                            'text-content': '7 day forecast',
+                                            'text-content': 'Hourly',
+                                            'class':'settings hourly-forecast chosen-setting',
+                                            'event-listeners':{'click':Populate.clickHourly},
                                         }).build(),
                                         new Element({
                                             'tagname': 'button',
-                                            'text-content': 'Hourly',
+                                            'text-content': 'Daily',
+                                            'class':'settings daily-forecast',
+                                            'event-listeners':{'click':Populate.clickDaily},
                                         }).build(),
                                     ],
                                 }).build(),
