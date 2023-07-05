@@ -13,8 +13,8 @@ import { weatherData } from './index.js';
 // DONE WITH IMPORTS
 
 export async function getWeather(location) {
-    Move.removeWeather();
-    Move.insertLoadingGIF();
+    Load.removeWeather();
+    Load.insertLoadingGIF();
 
     try {
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${location}&days=7&aqi=no&alerts=yes`, {mode: 'cors'});
@@ -28,67 +28,42 @@ export async function getWeather(location) {
             }
         
         } else {
-            Move.removeLoadingGIF();
+            Load.removeLoadingGIF();
             Input.handleData(data);
         }
     } catch(err) {
         console.log(err.message);
-        Move.removeLoadingGIF();
+        Load.removeLoadingGIF();
         // ErrorMessage.updateGUI();
     }
 }
+
 export const Settings = {
     measurement: 'US', // 'US' or 'metric'
     forecast: 'hourly', // 'hourly' or 'daily'
 }
 
-export class Move {
-    static removeWeather() {
-        const currentWeather = document.querySelector('.content-box.current');
-        const forecastWeather = document.querySelector('.content-box.forecast');
-        if (currentWeather) {
-            currentWeather.remove();
-        }
-        if (forecastWeather) {
-            forecastWeather.remove();
-        }
-    }
-
-    static insertLoadingGIF() {
-        const gif = document.createElement('img');
-        gif.classList.add('loading-gif');
-        gif.src = loadingGif;
-        document.querySelector('#content').appendChild(gif);
-    }
-
-    static removeLoadingGIF() {
-        document.querySelector('img.loading-gif').remove();
-    }
-
-
-}
-
 export class Populate {
     static dailyMetric() {
-        Load.removeContent();
+        Load.removeWeather;
         Load.currentWeather(weatherData.weather.metric);
         Load.forecastDaily(weatherData.weather.metric)
     }
     
     static dailyUS() {
-        Load.removeContent();
+        Load.removeWeather;
         Load.currentWeather(weatherData.weather.US);
         Load.forecastDaily(weatherData.weather.US);
     }
 
     static hourlyMetric() {
-        Load.removeContent();
+        Load.removeWeather;
         Load.currentWeather(weatherData.weather.metric);
         Load.forecastHourly(weatherData.weather.metric);
     }
 
     static hourlyUS() {
-        Load.removeContent();
+        Load.removeWeather;
         Load.currentWeather(weatherData.weather.US);
         Load.forecastHourly(weatherData.weather.US);
     }
@@ -171,7 +146,7 @@ export class Populate {
 }
 
 export class Load {
-    static removeContent() {
+    static removeWeather() {
         const current = document.querySelector('.content-box.current');
         const forecast = document.querySelector('.content-box.forecast');
 
@@ -182,6 +157,18 @@ export class Load {
             forecast.remove();
         }
     }
+
+    static insertLoadingGIF() {
+        const gif = document.createElement('img');
+        gif.classList.add('loading-gif');
+        gif.src = loadingGif;
+        document.querySelector('#content').appendChild(gif);
+    }
+
+    static removeLoadingGIF() {
+        document.querySelector('img.loading-gif').remove();
+    }
+
     static defaultUI() {
         document.querySelector('#content').appendChild(Build.sidebar());
     }
