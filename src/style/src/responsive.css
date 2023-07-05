@@ -40,8 +40,6 @@
     #content .content-box.current {
         grid-area: current;
         width: 100%;
-        max-height: 330px;
-        /* max-height: 330px might cause a bug if more content is added later on */
     }
     #content .content-box.forecast {
         grid-area: forecast;
@@ -94,8 +92,6 @@
         flex-direction: column;
         align-items: center;
         gap: 10px;
-        max-height: 515px;
-        /* max-height: 515px might cause a bug later on if more content is added */
     }
     body #content .content-box.current > * {
         width: 100%;

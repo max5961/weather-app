@@ -183,13 +183,7 @@ export class Load {
         }
     }
     static defaultUI() {
-        const content = document.querySelector('#content');
-        [
-            Build.sidebar(),
-            // Build.currentWeather(),
-            // Build.forecastContainer(),
-        ]
-        .forEach(container => content.appendChild(container));
+        document.querySelector('#content').appendChild(Build.sidebar());
     }
 
     static currentWeather(data) {
@@ -206,12 +200,18 @@ export class Load {
     }
 
     static forecastHourly(data) {
+        // gets exactly 24 hours of forecast data split into hours, so data needs to be grabbed from multiple days
+        // get number value in 24 hr time represting current time
         const currentHour = Number(Format.getHour24HR(data.location.localTime));
+        // get the hours left in current day
         const currentDayHours = data.hourly[0].slice(currentHour);
+        // get the remaining hours left to equal 24 total
         const nextDayHours = data.hourly[1].slice(0, data.hourly[1].length - currentDayHours.length);
         
+        // forecast container contains 2 main containers for each day
         const forecastContainer = Build.forecastContainer();
         
+        // insert data for each hour of day one into day one's container and add day one's container to the parent container
         const dayOneHourlyDateContainer = Build.hourlyDateContainer(data.daily[0])
         const dayOneContent = createHoursContainer();
         for (let i = 0; i < currentDayHours.length; i++) {
@@ -220,6 +220,7 @@ export class Load {
         dayOneHourlyDateContainer.appendChild(dayOneContent);
         forecastContainer.appendChild(dayOneHourlyDateContainer);
 
+        // repeat for day two
         const dayTwoHourlyDateContainer = Build.hourlyDateContainer(data.daily[1]);
         const dayTwoContent = createHoursContainer();
         for (let i = 0; i < nextDayHours.length; i++) {
@@ -228,8 +229,8 @@ export class Load {
         dayTwoHourlyDateContainer.appendChild(dayTwoContent);
         forecastContainer.appendChild(dayTwoHourlyDateContainer);
 
+        // insert everything into the document
         document.querySelector('#content').appendChild(forecastContainer);
-
 
         function createHoursContainer() {
             const container = document.createElement('div');
