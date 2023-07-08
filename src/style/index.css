@@ -320,7 +320,52 @@ img.icon {
     gap: 25px;
     overflow: auto;
 }
-.content-box.forecast .hourly-date-container {
+
+/* forecast proto */
+.content-box.forecast .forecast-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 125px;
+    flex-shrink: 0;
+}
+.content-box.forecast .forecast-item .condition-container {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 5px;
+    margin-top: 5px;
+    height: 115px;
+}
+.content-box.forecast .condition-container p.condition {
+    text-align: center;
+}
+
+/* forecast hourly */
+.content-box.forecast.hourly .hours-container {
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .content-box.forecast .hourly-date-container {
     width: auto;
     height: 100%;
     display: flex;
@@ -376,10 +421,6 @@ img.icon {
         font-size: 13px;
     }
 .content-box.forecast .condition-container {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between; */
     display: grid;
     grid-template-rows: 64px 50px;
     justify-items: center;
@@ -392,6 +433,6 @@ img.icon {
     align-items: center;
     justify-content: center;
 
-}
+} */
 
 @import url('./src/responsive.css');
