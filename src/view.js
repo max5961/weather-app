@@ -4,6 +4,7 @@ import { Input } from "./controller.js";
 import { WeatherData } from "./model.js";
 import { Format } from "./model.js";
 import { Populate } from "./controller.js";
+import { UI } from './controller.js';
 
 class Element {
     constructor(
@@ -111,6 +112,7 @@ export class Build {
                         new Element({
                             'tagname': 'button',
                             'class': 'expand-menu',
+                            'event-listeners':{'click':UI.expandMobileSidebar},
                             'children': [
                                 new Element({
                                     'tagname': 'img',

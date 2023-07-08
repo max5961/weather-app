@@ -106,8 +106,10 @@ export class WeatherData {
     }
 
     getHourlyForecast(data) {
+        // gets current day and next day hourly data from fetched dsta
+        // needs both days for UI which displays a 24 hours in hour increments
+        
         const twoDays = { US: {hourly:[]}, metric: {hourly:[]}};
-        // gets days 1 and days 2 hourly forecast from fetch data
         for (let i = 0; i < 2; i++) {
             
             twoDays.US.hourly.push([]);
@@ -144,7 +146,7 @@ export class WeatherData {
 export class Format {
 
     // gets the property that can be used to reference an imported icon
-    // iconImports[Format.getIconPath(data)];
+    // iconImports[Format.getIconPath(string)];
     static getIconPath(string) {
         if (string.includes('night')) {
             return `night/${sliceString(string)}`;

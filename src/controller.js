@@ -13,7 +13,6 @@ import { weatherData } from './index.js';
 // DONE WITH IMPORTS
 
 export async function getWeather(location) {
-    Load.removeWeather();
     Load.insertLoadingGIF();
 
     try {
@@ -192,15 +191,15 @@ export class Load {
         // gets exactly 24 hours of forecast data split into hours, so data needs to be grabbed from multiple days
         // get number value in 24 hr time represting current time
         const currentHour = Number(Format.getHour24HR(data.location.localTime));
-        // get the hours left in current day
+        // get the hours left in current day's hourly forecast
         const currentDayHours = data.hourly[0].slice(currentHour);
-        // get the remaining hours left to equal 24 total
+        // get the remaining hours needed to equal 24 total hours from the next day's hourly forecast
         const nextDayHours = data.hourly[1].slice(0, data.hourly[1].length - currentDayHours.length);
         
         // forecast container contains 2 main containers for each day
         const forecastContainer = Build.forecastContainer();
         
-        // insert data for each hour of day one into day one's container and add day one's container to the parent container
+        // insert data for each hour of day one into day one's container and add day one's container to the forecast container
         const dayOneHourlyDateContainer = Build.hourlyDateContainer(data.daily[0])
         const dayOneContent = createHoursContainer();
         for (let i = 0; i < currentDayHours.length; i++) {
@@ -217,6 +216,9 @@ export class Load {
         }
         dayTwoHourlyDateContainer.appendChild(dayTwoContent);
         forecastContainer.appendChild(dayTwoHourlyDateContainer);
+
+        // add the hourly class to the forecast container to separate styling for hourly vs daily forecast
+        forecastContainer.classList.add('hourly');
 
         // insert everything into the document
         document.querySelector('#content').appendChild(forecastContainer);
@@ -291,6 +293,32 @@ export class UI {
         } else {
             content.style.backgroundImage = "url('../src/media/background-image3.jpg')";;
         }
+    }
+
+    static expandMobileSidebar(e) {
+        const sidebar = document.querySelector('#content .sidebar');
+        sidebar.style.height = 'auto';
+
+        const expandButton = document.querySelector('button.expand-menu');
+        expandButton.classList.add('expanded');
+        expandButton.style.height = '0';
+
+        const minimizeButton = document.createElement('button');
+        minimizeButton.classList.add('expand-menu');
+        const icon = document.createElement('img');
+        icon.src = '../src/media/down-carrot.svg';
+        minimizeButton.appendChild(icon);
+
+        const sidebarContent = document.querySelector('#content .sidebar .content-box');
+        sidebarContent.appendChild(icon);
+    }
+
+    static minimizeMobileSidebar(e) {
+        const sidebar = document.querySelector('#content .sidebar');
+        sidebar.style.height = '142px';
+        const expandButton = document.querySelector('button.expand-menu');
+        expandButton.classList.remove('expanded');
+        expandButton.style.height = 'auto';
     }
 }
 

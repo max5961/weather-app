@@ -56,6 +56,10 @@
         flex-direction: row;
         justify-content: space-between;
     }
+    #content .content-box.forecast .forecast-item p.condition {
+        text-align: right;
+        max-width: 80px;
+    }
 
     #content .content-box.forecast .forecast-item .condition-container {
         display: flex;
@@ -67,11 +71,11 @@
         flex-direction: column;
         height: auto;
     }
-    #content .content-box.forecast.hourly .hourly-date-container {
+    #content .content-box.forecast .hourly-date-container {
         display: flex;
         flex-direction: column;
     }
-    #content .content-box.forecast.hourly .hourly-date-container .hours-container {
+    #content .content-box.forecast .hourly-date-container .hours-container {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -107,7 +111,7 @@
 
     #content .content-box.forecast.hourly .hourly-date-container .hours-container .forecast-item {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 2fr 4fr;
     }
 
     #content > * {
