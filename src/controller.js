@@ -209,14 +209,16 @@ export class Load {
         dayOneHourlyDateContainer.appendChild(dayOneContent);
         forecastContainer.appendChild(dayOneHourlyDateContainer);
 
-        // repeat for day two
-        const dayTwoHourlyDateContainer = Build.hourlyDateContainer(data.daily[1]);
-        const dayTwoContent = createHoursContainer();
-        for (let i = 0; i < nextDayHours.length; i++) {
-            dayTwoContent.appendChild(Build.forecastItemHourly(nextDayHours[i]));
+        // repeat for day two IF there aren't already 24 hours in day 1
+        if (currentDayHours.length !== 24) {
+            const dayTwoHourlyDateContainer = Build.hourlyDateContainer(data.daily[1]);
+            const dayTwoContent = createHoursContainer();
+            for (let i = 0; i < nextDayHours.length; i++) {
+                dayTwoContent.appendChild(Build.forecastItemHourly(nextDayHours[i]));
+            }
+            dayTwoHourlyDateContainer.appendChild(dayTwoContent);
+            forecastContainer.appendChild(dayTwoHourlyDateContainer);
         }
-        dayTwoHourlyDateContainer.appendChild(dayTwoContent);
-        forecastContainer.appendChild(dayTwoHourlyDateContainer);
 
         // add the hourly class to the forecast container to separate styling for hourly vs daily forecast
         forecastContainer.classList.add('hourly');
@@ -303,11 +305,13 @@ export class UI {
         const expandButton = document.querySelector('button.expand-menu');
         expandButton.classList.add('expanded');
         expandButton.style.height = '0';
+        expandButton.style.overflow = 'hidden';
 
         const minimizeButton = document.createElement('button');
         minimizeButton.classList.add('expand-menu');
         const icon = document.createElement('img');
         icon.src = '../src/media/down-carrot.svg';
+        icon.style.transform = 'rotate(180deg)';
         minimizeButton.appendChild(icon);
 
         const sidebarContent = document.querySelector('#content .sidebar .content-box');
