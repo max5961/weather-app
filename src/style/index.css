@@ -365,7 +365,7 @@ img.icon {
 
 
 
-/* .content-box.forecast .hourly-date-container {
+.content-box.forecast .hourly-date-container {
     width: auto;
     height: 100%;
     display: flex;
@@ -433,6 +433,6 @@ img.icon {
     align-items: center;
     justify-content: center;
 
-} */
+}
 
 @import url('./src/responsive.css');

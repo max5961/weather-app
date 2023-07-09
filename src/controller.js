@@ -182,6 +182,7 @@ export class Load {
         const forecastContainer = Build.forecastContainer();
         for (let i = 0; i < 7; i++) {
             forecastContainer.appendChild(Build.forecastItemDaily(data.daily[i]));
+            console.log(data.daily[i].date);
         }
 
         document.querySelector('#content').appendChild(forecastContainer);

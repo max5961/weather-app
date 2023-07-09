@@ -162,13 +162,15 @@ export class Format {
     }
 
     static getDayNameLong(string) {
-        return ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(string).getDay()];
+        const date = new Date(Format.hyphenate(string));
+        return ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
     }
     
     static getDayNameShort(string) {
-        return ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(string).getDay()];
+        const date = new Date(Format.hyphenate(string));
+        return ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
     }
-
+2
     static getDayNumber(string) {
         // string represting date must be in 'yyyy-MM-dd' format
         return string.split('-')[2].slice(0,2);
@@ -179,7 +181,7 @@ export class Format {
     }
 
     static getDayNumberPrefix(string) {
-        const number = new Date(string).getDate();
+        const number = new Date(Format.hyphenate(string)).getDate();
         let suffix = 'th';
 
         if (number == 1 || number == 21 || number == 31) {
@@ -196,14 +198,8 @@ export class Format {
         }
     }
 
-    static getDayNumber(string) {
-        const number = new Date(string).getDate();
-        if (number > 9) {
-            return number.toString();
-        }
-        if (number < 10) {
-            return '0' + number;
-        }
+    static getDayNumberDD(string) {
+        return Format.getDayNumber(string).toString();
     }
 
     static getYearNumber(string) {
@@ -241,6 +237,10 @@ export class Format {
         } else {
             return string;
         }
+    }
+
+    static hyphenate(string) {
+        return string.split('-').join('/');
     }
 }
 

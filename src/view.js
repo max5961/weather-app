@@ -480,7 +480,7 @@ export class Build {
             'children': [
                 new Element({
                     'tagname': 'h3',
-                    'text-content': `${Format.getDayNameShort(data.date)} ${Format.getDayNumber(data.date)}`,
+                    'text-content': `${Format.getDayNameShort(data.date)} ${Format.getDayNumberDD(data.date)}`,
                 }).build(),
                 new Element({
                     'tagname': 'div',
