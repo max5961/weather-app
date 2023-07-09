@@ -504,21 +504,15 @@ export class Build {
                     ],
                 }).build(),
                 new Element({
-                    'tagname': 'div',
-                    'class': 'condition-container',
-                    'children': [
-                        new Element({
-                            'tagname': 'img',
-                            'class': 'condition icon',
-                            'src': iconImports[data.icon],
-                            'alt': '',
-                        }).build(),
-                        new Element({
-                            'tagname': 'p',
-                            'class': 'condition',
-                            'text-content': `${data.condition}`,
-                        }).build(),
-                    ],
+                    'tagname': 'img',
+                    'class': 'condition icon',
+                    'src': iconImports[data.icon],
+                    'alt': '',
+                }).build(),
+                new Element({
+                    'tagname': 'p',
+                    'class': 'condition',
+                    'text-content': `${data.condition}`,
                 }).build(),
             ],
         }).build();
@@ -539,21 +533,15 @@ export class Build {
                     'text-content':`${data.temp}\u00B0`,
                 }).build(),
                 new Element({
-                    'tagname': 'div',
-                    'class': 'condition-container',
-                    'children': [
-                        new Element({
-                            'tagname': 'img',
-                            'class': 'condition icon',
-                            'src': iconImports[data.icon],
-                            'alt': '',
-                        }).build(),
-                        new Element({
-                            'tagname': 'p',
-                            'class': 'condition',
-                            'text-content': `${data.condition}`,
-                        }).build(),
-                    ],
+                    'tagname': 'img',
+                    'class': 'condition icon',
+                    'src': iconImports[data.icon],
+                    'alt': '',
+                }).build(),
+                new Element({
+                    'tagname': 'p',
+                    'class': 'condition',
+                    'text-content': `${data.condition}`,
                 }).build(),
             ],
         }).build();

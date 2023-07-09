@@ -46,47 +46,62 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        padding: 25px;
     }
-    #content .content-box.forecast > * {
-        width: 100%;
-    }
+
+    /* daily forecast item */
     #content .content-box.forecast .forecast-item {
-        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        gap: 25px;
+        width: 100%;
+        height: 100px;
     }
-    #content .content-box.forecast .forecast-item p.condition {
-        text-align: right;
-        max-width: 80px;
+    #content .content-box.forecast .forecast-item > * {
+        flex-shrink: 0;
     }
-
-    #content .content-box.forecast .forecast-item .condition-container {
-        display: flex;
-        flex-direction: row;
-    }
-
+        #content .content-box.forecast .forecast-item h3,
+        #content .content-box.forecast .forecast-item .high-low-container,
+        #content .content-box.forecast .forecast-item .hourly-temp {
+            width: 100px;
+            flex-grow: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+        #content .content-box.forecast .forecast-item img.condition.icon {
+            height: 65px;
+            width: 65px;
+        }
+        #content .content-box.forecast .forecast-item p.condition {
+            flex-grow: 1;
+            text-align: center;
+            word-wrap: normal;
+            height: auto;
+        }
+    
+    /* hourly forecast item */
     #content .content-box.forecast.hourly {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-    }
-    #content .content-box.forecast .hourly-date-container {
-        display: flex;
-        flex-direction: column;
-    }
-    #content .content-box.forecast .hourly-date-container .hours-container {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
-    #content .content-box.forecast.hourly .hourly-date-container .hours-container .forecast-item {
-        display: grid;
-        grid-template-columns: 1fr 2fr 2fr;
+    #content .content-box.forecast.hourly .hourly-date-container {
+        width: 100%;
+    }
+    #content .content-box.forecast.hourly .hours-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    #content .content-box.forecast.hourly .forecast-item.hourly-item {
+        display: flex;
+        flex-direction: row;
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     body #content .content-box.current {
         padding-left: 25px;
         padding-right: 25px;
@@ -109,12 +124,29 @@
         gap: 5px;
     }
 
-    #content .content-box.forecast.hourly .hourly-date-container .hours-container .forecast-item {
-        display: grid;
-        grid-template-columns: 1fr 2fr 4fr;
+    #content .content-box.forecast .forecast-item,
+    #content .content-box.forecast.hourly .forecast-item.hourly-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        border-bottom: 2px solid #ffffff;
+        padding-bottom: 15px;
+        height: auto;
     }
-
-    #content > * {
-        font-size: 0.8em;
+    #content .content-box.forecast.hourly .hours-container {
+        align-items: center
     }
+    #content .content-box.forecast.hourly .forecast-item.hourly-item {
+        width: 85%;
+    }
+        #content .content-box.forecast .forecast-item.last-item,
+        #content .content-box.forecast.hourly .forecast-item.hourly-item.last-item {
+            border-bottom: none;
+        }
+        #content .content-box.forecast .forecast-item h3,
+        #content .content-box.forecast .forecast-item .high-low-container,
+        #content .content-box.forecast .forecast-item .hourly-temp {
+            width: auto;
+        }
 }

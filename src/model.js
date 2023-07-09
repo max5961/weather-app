@@ -240,6 +240,7 @@ export class Format {
     }
 
     static hyphenate(string) {
+        // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
         return string.split('-').join('/');
     }
 }

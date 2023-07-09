@@ -181,8 +181,14 @@ export class Load {
     static forecastDaily(data) {
         const forecastContainer = Build.forecastContainer();
         for (let i = 0; i < 7; i++) {
-            forecastContainer.appendChild(Build.forecastItemDaily(data.daily[i]));
-            console.log(data.daily[i].date);
+            // if (i === 6) for mobile style
+            if (i === 6) {
+                const lastItem = Build.forecastItemDaily(data.daily[i]);
+                lastItem.classList.add('last-item');
+                forecastContainer.appendChild(lastItem);
+            } else {
+                forecastContainer.appendChild(Build.forecastItemDaily(data.daily[i]));
+            }
         }
 
         document.querySelector('#content').appendChild(forecastContainer);
@@ -204,7 +210,13 @@ export class Load {
         const dayOneHourlyDateContainer = Build.hourlyDateContainer(data.daily[0])
         const dayOneContent = createHoursContainer();
         for (let i = 0; i < currentDayHours.length; i++) {
-            dayOneContent.appendChild(Build.forecastItemHourly(currentDayHours[i]))
+            if (i === currentDayHours.length - 1) {
+                const lastItem = Build.forecastItemHourly(currentDayHours[i]);
+                lastItem.classList.add('last-item');
+                dayOneContent.appendChild(lastItem);
+            } else {
+                dayOneContent.appendChild(Build.forecastItemHourly(currentDayHours[i]))
+            }
         }
         dayOneHourlyDateContainer.appendChild(dayOneContent);
         forecastContainer.appendChild(dayOneHourlyDateContainer);
@@ -214,7 +226,13 @@ export class Load {
             const dayTwoHourlyDateContainer = Build.hourlyDateContainer(data.daily[1]);
             const dayTwoContent = createHoursContainer();
             for (let i = 0; i < nextDayHours.length; i++) {
-                dayTwoContent.appendChild(Build.forecastItemHourly(nextDayHours[i]));
+                if (i === nextDayHours.length - 1) {
+                    const lastItem = Build.forecastItemHourly(nextDayHours[i]);
+                    lastItem.classList.add('last-item');
+                    dayTwoContent.appendChild(lastItem);
+                } else {
+                    dayTwoContent.appendChild(Build.forecastItemHourly(nextDayHours[i]));
+                }
             }
             dayTwoHourlyDateContainer.appendChild(dayTwoContent);
             forecastContainer.appendChild(dayTwoHourlyDateContainer);
