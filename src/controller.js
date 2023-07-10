@@ -5,11 +5,11 @@ const nightIcons = ["night/113.png","night/143.png","night/185.png","night/248.p
 [dayIcons, nightIcons].flat().forEach(icon => iconImports[icon] = require(`./media/apiIcons/${icon}`));
 
 import { APIkey } from "./APIkey";
-import { WeatherData } from "./model.js";
 import loadingGif from './media/loading.gif'
 import { Build } from './view.js' 
 import { Format } from './model.js';
 import { weatherData } from './index.js';
+import { savedLocations } from "./index.js";
 // DONE WITH IMPORTS
 
 export async function getWeather(location) {
@@ -29,8 +29,8 @@ export async function getWeather(location) {
         } else {
             console.log(data);
             Load.removeLoadingGIF();
-            UI.toggleBackgroundImage(data);
             Input.handleData(data);
+            UI.toggleBackgroundImage(data);
         }
     } catch(err) {
         console.log(err.message);
@@ -147,6 +147,12 @@ export class Populate {
 }
 
 export class Load {
+    static defaultUI() {
+        document.querySelector('#content').appendChild(Build.sidebar());
+        Load.insertSavedCities();
+        getWeather('10001');
+    }
+
     static removeWeather() {
         const current = document.querySelector('.content-box.current');
         const forecast = document.querySelector('.content-box.forecast');
@@ -168,10 +174,6 @@ export class Load {
 
     static removeLoadingGIF() {
         document.querySelector('img.loading-gif').remove();
-    }
-
-    static defaultUI() {
-        document.querySelector('#content').appendChild(Build.sidebar());
     }
 
     static currentWeather(data) {
@@ -250,6 +252,21 @@ export class Load {
             return container;
         }
     }
+
+    static insertSavedCities() {
+        const citiesContainer = document.querySelector('ul.saved-cities');
+        for (const key in savedLocations.data) {
+            const city = Build.savedCityItem(key, savedLocations.data);
+            citiesContainer.appendChild(city);
+        }
+    }
+
+    static removeSavedCities() {
+        const citiesContainer = document.querySelector('ul.saved-cities');
+        while(citiesContainer.firstChild) {
+            citiesContainer.removeChild(citiesContainer.firstChild);
+        }
+    }
 }
 
 export class Input {
@@ -312,36 +329,77 @@ export class UI {
         if (data.current.condition.icon.includes('/night/')) {
             content.style.backgroundImage = "url('../src/media/night-background.jpg')"
         } else {
-            content.style.backgroundImage = "url('../src/media/background-image3.jpg')";;
+            content.style.backgroundImage = "url('../src/media/background-image3.jpg')";
         }
     }
 
     static expandMobileSidebar(e) {
         const sidebar = document.querySelector('#content .sidebar');
-        sidebar.style.height = 'auto';
-
-        const expandButton = document.querySelector('button.expand-menu');
-        expandButton.classList.add('expanded');
-        expandButton.style.height = '0';
-        expandButton.style.overflow = 'hidden';
+        sidebar.classList.add('maximized');
 
         const minimizeButton = document.createElement('button');
-        minimizeButton.classList.add('expand-menu');
+        minimizeButton.classList.add('toggle-menu');
+        minimizeButton.classList.add('minimize');
         const icon = document.createElement('img');
         icon.src = '../src/media/down-carrot.svg';
         icon.style.transform = 'rotate(180deg)';
         minimizeButton.appendChild(icon);
+        minimizeButton.onclick = UI.minimizeMobileSidebar;
 
         const sidebarContent = document.querySelector('#content .sidebar .content-box');
-        sidebarContent.appendChild(icon);
+        sidebarContent.appendChild(minimizeButton);
+
+        const maximizeButtons = document.querySelectorAll('.toggle-menu.maximize');
+        maximizeButtons.forEach(btn => btn.remove());
     }
 
     static minimizeMobileSidebar(e) {
         const sidebar = document.querySelector('#content .sidebar');
-        sidebar.style.height = '142px';
-        const expandButton = document.querySelector('button.expand-menu');
+        sidebar.classList.remove('maximized');
+
+        const expandButton = document.querySelector('button.toggle-menu');
         expandButton.classList.remove('expanded');
         expandButton.style.height = 'auto';
+
+        const maximizeButton = document.createElement('button');
+        maximizeButton.classList.add('toggle-menu');
+        maximizeButton.classList.add('maximize');
+        const icon = document.createElement('img');
+        icon.src = '../src/media/down-carrot.svg';
+        maximizeButton.appendChild(icon);
+        maximizeButton.onclick = UI.expandMobileSidebar;
+
+        const form = document.querySelector('.sidebar .content-box form.search');
+        form.insertAdjacentElement('afterend', maximizeButton);
+
+        const minimizeButton = document.querySelector('.toggle-menu.minimize');
+        minimizeButton.remove();
+    }
+
+    static saveLocation() {
+        savedLocations.saveLocation(weatherData);
+        Load.removeSavedCities();
+        Load.insertSavedCities();
+    }    
+
+    static removeLocation(e) {
+        const id = UI.getCityID(e);
+        savedLocations.removeLocation(id);
+        Load.removeSavedCities();
+        Load.insertSavedCities();
+    }
+
+    static clickSavedLocation(e) {
+        const id = UI.getCityID(e);
+        getWeather(savedLocations.data[id]);
+    }
+
+    static getCityID(e) {
+        let node = e.target;
+        while (!node.getAttribute('saved-id')) {
+            node = node.parentNode;
+        }
+        return node.getAttribute('saved-id');
     }
 }
 

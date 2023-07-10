@@ -46,7 +46,7 @@ img.loading-gif {
     backdrop-filter: blur(5px);
     border-radius: 15px;
     padding: 15px;
-    border: 3px solid #22487E;
+    border: 2px solid #22487E;
     color: #ffffff;
 }
 
@@ -124,7 +124,7 @@ img.icon {
 .sidebar form.search p.error-message.visible {
     visibility: visible;
 }
-.sidebar button.expand-menu {
+.sidebar button.toggle-menu {
     width: 100%;
     height: 0;
     overflow: hidden;
@@ -163,6 +163,7 @@ img.icon {
     background-color: #69bbff80;
     border-color: #000000;
 }
+
 .sidebar ul.saved-cities {
     display: flex;
     flex-direction: column;
@@ -201,10 +202,12 @@ img.icon {
     transition: color 100ms ease-in-out;
 }
 .sidebar ul.saved-cities button.left-container:hover {
-    color: #e2e2e2;
+    /* color: #e2e2e2; */
+    color: #A1F9A1;
 }
 .sidebar ul.saved-cities button.left-container:active {
-    color: #cccccc;
+    /* color: #cccccc; */
+    color: #6cc76c;
 }
 .sidebar ul.saved-cities h3 {
     font-size: 15px;
@@ -227,8 +230,24 @@ img.icon {
         "city-region ."
         "temp condition"
         "properties properties"
+        ". save-city"
           
 }
+.content-box.current button.save-city {
+    grid-area: save-city;
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    background-color: #A1F9A1;
+    color: black;
+    justify-self: end;
+    max-width: 225px;
+}
+    .content-box.current button.save-city:hover {
+        background-color: #73cf73; 
+    }
+    .content-box.current button.save-city:active {
+        background-color: #5ab65a; 
+    }
 .content-box.current .city-region-container {
     grid-area: city-region;
     display: flex;
@@ -309,6 +328,11 @@ img.icon {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    width: 90px;
+    flex-shrink: 0;
+}
+.weather-properties .right-content p.text {
+    font-weight: 900;
 }
 
 /* forecast proto */
@@ -319,6 +343,7 @@ img.icon {
     align-items: center;
     gap: 25px;
     overflow: auto;
+    height: 285px;
     max-width: 1900px;
 }
 .content-box.forecast .forecast-item {
@@ -342,6 +367,9 @@ img.icon {
 }
     .content-box.forecast.hourly .hourly-date-container p.date {
         border-bottom: 2px solid #ffffff;
+        height: 50px;
+        display: flex;
+        align-items: center;
     }
 .content-box.forecast.hourly .hours-container {
     display: flex;
@@ -358,6 +386,11 @@ img.icon {
 .content-box.forecast.hourly .condition-container {
     width: 100%;
     height: 115px;
+}
+
+/* forecast item daily */
+.content-box.forecast .forecast-item.daily-item {
+    height: 95%;
 }
 
 @import url('./src/responsive.css');

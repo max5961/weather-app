@@ -245,3 +245,63 @@ export class Format {
     }
 }
 
+export class SavedLocations {
+    constructor () {
+        this.data = {};
+    }
+
+    saveLocation(weatherData) {
+        const id = this.createID();
+        const location = [`${weatherData.weather.US.location.city}`, `${weatherData.weather.US.location.region}`];
+        
+        if (this.isUniqueLocation(location)) {
+            this.data[id] = location;
+            this.updateLocalStorage();
+        } else {
+            return false;
+        }
+    }
+
+    removeLocation(id) {
+        delete this.data[id];
+
+        this.updateLocalStorage();
+    }
+
+    isUniqueLocation(location) {
+        for (const key in this.data) {
+            if (this.data[key][0] === location[0] && this.data[key][1] === location[1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    createID() {
+        const id = createID();
+
+        while (Object.keys(this.data).includes(id)) {
+            id = createID();
+        }
+
+        return id;
+
+        function createID() {
+            const id = Math.floor(Math.random() * 8999 + 1000);
+            return id.toString();
+        }
+    }
+
+    updateLocalStorage() {
+        localStorage.setItem('savedLocations', JSON.stringify(this.data));
+    }
+
+    getStorage() {
+        if (localStorage.getItem('savedLocations')) {
+            Object.assign(this.data, JSON.parse(localStorage.getItem('savedLocations')));
+        } else {
+            return;
+        }
+    }
+}
+

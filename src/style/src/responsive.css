@@ -18,23 +18,26 @@
         height: 142px;
         overflow: hidden;
     }
+    #content .sidebar.maximized {
+        height: auto;
+    }
         #content .sidebar .content-box {
             overflow: hidden;
         }
         #content .sidebar .content-box form {
             margin-bottom: 5px;
         }
-        #content .sidebar .content-box button.expand-menu {
+        #content .sidebar .content-box button.toggle-menu {
             height: auto;
             overflow: visible;
             border-radius: 20px;
             width: 100%;
             background-color: transparent;
         }
-        #content .sidebar .content-box button.expand-menu:hover {
+        #content .sidebar .content-box button.toggle-menu:hover {
             background-color: #00000050;
         }
-        #content .sidebar .content-box button.expand-menu:active {
+        #content .sidebar .content-box button.toggle-menu:active {
             background-color: #00000030;
         }
     #content .content-box.current {
@@ -47,6 +50,7 @@
         flex-direction: column;
         gap: 10px;
         padding: 25px;
+        height: auto;
     }
 
     /* daily forecast item */
@@ -130,7 +134,7 @@
         flex-direction: column;
         align-items: center;
         gap: 5px;
-        border-bottom: 2px solid #ffffff;
+        border-bottom: 2px solid #ffffff80;
         padding-bottom: 15px;
         height: auto;
     }

@@ -111,7 +111,7 @@ export class Build {
                         }).build(),
                         new Element({
                             'tagname': 'button',
-                            'class': 'expand-menu',
+                            'class': 'toggle-menu maximize',
                             'event-listeners':{'click':UI.expandMobileSidebar},
                             'children': [
                                 new Element({
@@ -189,35 +189,38 @@ export class Build {
         }).build();
     }
 
-    static savedCityItem() {
+    static savedCityItem(key, data) {
         return new Element({
             'tagname': 'li',
             'class': 'city-name',
             'children': [
                 new Element({
                     'tagname': 'button',
+                    'saved-ID': `${key}`,
                     'class': 'left-container',
+                    'event-listeners':{'click': UI.clickSavedLocation},
                     'children': [
                         new Element({
                             'tagname': 'h3',
-                            'text-content': 'Boston',
+                            'text-content': `${data[key][0]}`,
                         }).build(),
                         new Element({
                             'tagname': 'p',
                             'class': 'region',
-                            'text-content': 'Massachusetts, USA',
+                            'text-content': `${data[key][1]}`,
                         }).build(),
                     ],
                 }).build(),
                 new Element({
                     'tagname': 'button',
                     'class': 'delete',
-                    'city-object-id': '12345',
+                    'saved-ID': `${key}`,
                     'children': [
                         new Element({
                             'tagname': 'img',
                             'class': 'delete',
                             'src': '../src/media/delete.svg',
+                            'event-listeners':{'click':UI.removeLocation},
                             'alt': '',
                         }).build(),
                     ],
@@ -461,6 +464,12 @@ export class Build {
                             ],
                         }).build(),
                     ],
+                }).build(),
+                new Element({
+                    'tagname':'button',
+                    'class':'save-city',
+                    'text-content':'SAVE LOCATION',
+                    'event-listeners':{'click':UI.saveLocation}
                 }).build(),
             ],
         }).build();
