@@ -24,35 +24,67 @@ export async function getWeather(location) {
         const data = await response.json();
 
         if (!response.ok) {
-            if (data.error.message) {
-                throw new Error(data.error.message);
-            } else {
-                throw new Error('unknown error has occured');
-            }
+            HandleResponse.badResponse(data);
         
         } else {
-            handleResolve(data);
+            HandleResponse.resolve(data);
         }
     } catch(err) {
-        handleError(err);
+        HandleResponse.error(err);
     }
-}
-
-function handleResolve(data) {
-    Load.removeLoadingGIF();
-    Load.removeErrorMessage();
-    Input.handleData(data);
-    UI.toggleBackgroundImage(data);
-}
-
-function handleError(err) {
-    Load.showErrorMessage(err);
-    Load.removeLoadingGIF();
 }
 
 export const Settings = {
     measurement: 'US', // 'US' or 'metric'
     forecast: 'hourly', // 'hourly' or 'daily'
+}
+
+export class HandleResponse {
+    static resolve(data) {
+        Load.removeLoadingGIF();
+        HandleResponse.removeErrorMessage();
+        Input.handleData(data);
+        UI.toggleBackgroundImage(data);
+    }
+
+    static error(err) {
+        Load.removeLoadingGIF();
+        HandleResponse.showErrorMessage(err);
+    }
+
+    static badResponse(data) {
+        console.error(data.error);
+
+        if (data.error.code == 1006) {
+            throw new Error(data.error.message);
+            return;
+        }
+    
+        if (data.error.code == 9999) {
+            throw new Error(data.error.message);
+            return;
+        }
+    
+        throw new Error('Unknown error has occured');
+    }
+
+    static showErrorMessage(err) {
+        console.error(err);
+
+        let message = err.message;
+        if (err.name === 'TypeError') {
+            message = 'Unkown error has occured';
+        }
+
+        const errorMessage = document.querySelector('form.search p.error-message');
+        errorMessage.textContent = message;
+        errorMessage.classList.add('visible');
+    }
+
+    static removeErrorMessage() {
+        const errorMessage = document.querySelector('form.search p.error-message');
+        errorMessage.classList.remove('visible');
+    }
 }
 
 export class Populate {
@@ -161,7 +193,7 @@ export class Load {
     static defaultUI() {
         document.querySelector('#content').appendChild(Build.sidebar());
         Load.insertSavedCities();
-        getWeather('10001');
+        getWeather('02110');
     }
 
     static removeWeather() {
@@ -193,9 +225,11 @@ export class Load {
 
     static forecastDaily(data) {
         const forecastContainer = Build.forecastContainer();
-        for (let i = 0; i < 7; i++) {
-            // if (i === 6) for mobile style
-            if (i === 6) {
+
+        const length = data.daily.length;
+        for (let i = 0; i < length; i++) {
+            // if (i === length - 1) for mobile style
+            if (i === length - 1) {
                 const lastItem = Build.forecastItemDaily(data.daily[i]);
                 lastItem.classList.add('last-item');
                 forecastContainer.appendChild(lastItem);
@@ -277,17 +311,6 @@ export class Load {
         while(citiesContainer.firstChild) {
             citiesContainer.removeChild(citiesContainer.firstChild);
         }
-    }
-
-    static showErrorMessage(err) {
-        const errorMessage = document.querySelector('form.search p.error-message');
-        errorMessage.textContent = err.message;
-        errorMessage.classList.add('visible');
-    }
-
-    static removeErrorMessage() {
-        const errorMessage = document.querySelector('form.search p.error-message');
-        errorMessage.classList.remove('visible');
     }
 }
 

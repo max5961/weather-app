@@ -76,8 +76,12 @@ export class WeatherData {
     }
 
     getDailyForecast(data) {
+        let length = data.forecast.forecastday.length;
+        if (length > 7) {
+            length = 7;
+        }
         const dailyForecast = { US: {daily:[]}, metric: {daily:[]}};
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < length; i++) {
             const singleDay = this.setSingleDayForecast(data, i);
             dailyForecast.US.daily.push(singleDay.US);
             dailyForecast.metric.daily.push(singleDay.metric);
