@@ -252,7 +252,7 @@ export class SavedLocations {
 
     saveLocation(weatherData) {
         const id = this.createID();
-        const location = [`${weatherData.weather.US.location.city}`, `${weatherData.weather.US.location.region}`];
+        const location = [`${weatherData.weather.US.location.city}`, `${weatherData.weather.US.location.region}, ${weatherData.weather.US.location.country}`];
         
         if (this.isUniqueLocation(location)) {
             this.data[id] = location;
