@@ -1,10 +1,16 @@
 import { iconImports } from "./controller.js";
-import searchIcon from './media/search.svg'
-import { Input } from "./controller.js";
-import { WeatherData } from "./model.js";
+import searchIcon from './media/search.svg';
+import downCarrot from './media/down-carrot.svg';
+import deleteIcon from './media/delete.svg';
+import thermometer from './media/thermometer.svg';
+import wind from './media/wind.svg';
+import rain from './media/rain.svg';
+import snow from './media/snow.svg';
+import humidity from './media/humidity.svg';
+import pressure from './media/pressure.svg'
+
+import { Input, Populate, UI } from "./controller.js";
 import { Format } from "./model.js";
-import { Populate } from "./controller.js";
-import { UI } from './controller.js';
 
 class Element {
     constructor(
@@ -116,7 +122,7 @@ export class Build {
                             'children': [
                                 new Element({
                                     'tagname': 'img',
-                                    'src': '../src/media/down-carrot.svg',
+                                    'src': downCarrot,
                                     'alt': 'expand-menu',
                                 }).build(),
                             ],
@@ -219,7 +225,7 @@ export class Build {
                         new Element({
                             'tagname': 'img',
                             'class': 'delete',
-                            'src': '../src/media/delete.svg',
+                            'src': deleteIcon,
                             'event-listeners':{'click':UI.removeLocation},
                             'alt': '',
                         }).build(),
@@ -307,7 +313,7 @@ export class Build {
                             'children': [
                                 new Element({
                                     'tagname': 'img',
-                                    'src': '../src/media/thermometer.svg',
+                                    'src': thermometer,
                                     'alt': 'feels-like',
                                 }).build(),
                                 new Element({
@@ -334,7 +340,7 @@ export class Build {
                             'children': [
                                 new Element({
                                     'tagname': 'img',
-                                    'src': '../src/media/wind.svg',
+                                    'src': wind,
                                     'alt': 'wind',
                                 }).build(),
                                 new Element({
@@ -361,7 +367,7 @@ export class Build {
                             'children': [
                                 new Element({
                                     'tagname': 'img',
-                                    'src': '../src/media/rain.svg',
+                                    'src': rain,
                                     'alt': 'rain',
                                 }).build(),
                                 new Element({
@@ -388,7 +394,7 @@ export class Build {
                             'children': [
                                 new Element({
                                     'tagname': 'img',
-                                    'src': '../src/media/snow.svg',
+                                    'src': snow,
                                     'alt': 'snow',
                                 }).build(),
                                 new Element({
@@ -415,7 +421,7 @@ export class Build {
                             'children': [
                                 new Element({
                                     'tagname': 'img',
-                                    'src': '../src/media/humidity.svg',
+                                    'src': humidity,
                                     'alt': 'humidity',
                                 }).build(),
                                 new Element({
@@ -442,7 +448,7 @@ export class Build {
                             'children': [
                                 new Element({
                                     'tagname': 'img',
-                                    'src': '../src/media/pressure.svg',
+                                    'src': pressure,
                                     'alt': 'pressure',
                                 }).build(),
                                 new Element({
