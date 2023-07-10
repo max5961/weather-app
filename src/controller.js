@@ -27,16 +27,23 @@ export async function getWeather(location) {
             }
         
         } else {
-            console.log(data);
-            Load.removeLoadingGIF();
-            Input.handleData(data);
-            UI.toggleBackgroundImage(data);
+            handleResolve(data);
         }
     } catch(err) {
-        console.log(err.message);
-        Load.removeLoadingGIF();
-        // ErrorMessage.updateGUI();
+        handleError(err);
     }
+}
+
+function handleResolve(data) {
+    Load.removeLoadingGIF();
+    Load.removeErrorMessage();
+    Input.handleData(data);
+    UI.toggleBackgroundImage(data);
+}
+
+function handleError(err) {
+    Load.showErrorMessage(err);
+    Load.removeLoadingGIF();
 }
 
 export const Settings = {
@@ -266,6 +273,17 @@ export class Load {
         while(citiesContainer.firstChild) {
             citiesContainer.removeChild(citiesContainer.firstChild);
         }
+    }
+
+    static showErrorMessage(err) {
+        const errorMessage = document.querySelector('form.search p.error-message');
+        errorMessage.textContent = err.message;
+        errorMessage.classList.add('visible');
+    }
+
+    static removeErrorMessage() {
+        const errorMessage = document.querySelector('form.search p.error-message');
+        errorMessage.classList.remove('visible');
     }
 }
 

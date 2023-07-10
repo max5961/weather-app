@@ -39,6 +39,7 @@ img.loading-gif {
     margin-right: auto;
     margin-top: auto;
     margin-bottom: auto;
+    z-index: 1;
 }
 
 .content-box {
